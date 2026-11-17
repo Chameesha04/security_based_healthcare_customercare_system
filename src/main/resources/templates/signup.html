@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/mediflow-head :: head('Sign Up | MediFlow Connect')}"></head>
+<body class="font-inter mediflow-body min-h-screen">
+
+<header th:replace="~{fragments/mediflow-header :: public-header}"></header>
+
+<main class="min-h-[calc(100vh-80px)] flex">
+    <div class="hidden lg:flex lg:w-2/5 relative">
+        <img src="https://images.unsplash.com/photo-1631217868264-e5b90bb5e933?w=1200&q=80"
+             alt="Healthcare team"
+             class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-br from-health-500/90 to-health-700/90 flex flex-col justify-center p-10 text-white">
+            <div class="text-5xl mb-4">📝</div>
+            <h2 class="text-3xl font-bold mb-4">Join MediFlow Connect</h2>
+            <p class="text-health-100 mb-6">Create your patient account and manage your healthcare journey online.</p>
+            <div class="grid grid-cols-1 gap-3">
+                <div class="flex items-center gap-3 bg-white/10 rounded-xl p-3"><span>📋</span><span class="text-sm">Download Lab Reports</span></div>
+                <div class="flex items-center gap-3 bg-white/10 rounded-xl p-3"><span>📅</span><span class="text-sm">Book Consultations</span></div>
+                <div class="flex items-center gap-3 bg-white/10 rounded-xl p-3"><span>✅</span><span class="text-sm">Pre-registration</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full lg:w-3/5 flex items-center justify-center p-6 md:p-10 bg-gradient-to-br from-health-50 to-white overflow-y-auto">
+        <div class="w-full max-w-2xl py-8">
+            <div class="text-center mb-6 lg:hidden">
+                <div class="text-4xl mb-2">📝</div>
+                <h1 class="text-3xl font-bold text-slate-800">Create Account</h1>
+            </div>
+
+            <div class="glass-card p-8 md:p-10">
+                <div class="hidden lg:block mb-6">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-2">📝 Create Your Account</h1>
+                    <p class="text-slate-600">Join our healthcare community today</p>
+                </div>
+
+                <div th:if="${param.error}" class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl mb-6 flex items-center gap-2">
+                    <span>⚠️</span><span th:text="${param.error[0]}">Error</span>
+                </div>
+                <div th:if="${error}" class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-xl mb-6 flex items-center gap-2">
+                    <span>⚠️</span><span th:text="${error}">Error</span>
+                </div>
+
+                <form method="post" action="/signup" id="signupForm" class="space-y-5">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label for="firstName" class="block text-sm font-semibold text-slate-700 mb-2">👤 First Name <span class="text-red-500">*</span></label>
+                            <input type="text" name="firstName" id="firstName" placeholder="First name" required class="input-health" />
+                            <div class="error-message text-red-500 text-sm hidden mt-1" id="firstNameError"></div>
+                        </div>
+                        <div>
+                            <label for="lastName" class="block text-sm font-semibold text-slate-700 mb-2">👤 Last Name <span class="text-red-500">*</span></label>
+                            <input type="text" name="lastName" id="lastName" placeholder="Last name" required class="input-health" />
+                            <div class="error-message text-red-500 text-sm hidden mt-1" id="lastNameError"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">📧 Email <span class="text-red-500">*</span></label>
+                        <input type="email" name="email" id="email" placeholder="you@example.com" required class="input-health" />
+                        <div class="error-message text-red-500 text-sm hidden mt-1" id="emailError"></div>
+                    </div>
+
+                    <div>
+                        <label for="phoneNumber" class="block text-sm font-semibold text-slate-700 mb-2">📱 Phone <span class="text-red-500">*</span></label>
+                        <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="+94 XX XXX XXXX" required class="input-health" />
+                        <div class="error-message text-red-500 text-sm hidden mt-1" id="phoneNumberError"></div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <div>
+                            <label for="password" class="block text-sm font-semibold text-slate-700 mb-2">🔒 Password <span class="text-red-500">*</span></label>
+                            <input type="password" name="password" id="password" placeholder="Min. 8 characters" required class="input-health" />
+                            <div class="password-strength text-sm mt-1" id="passwordStrength"></div>
+                            <div class="error-message text-red-500 text-sm hidden mt-1" id="passwordError"></div>
+                        </div>
+                        <div>
+                            <label for="confirmPassword" class="block text-sm font-semibold text-slate-700 mb-2">🔒 Confirm <span class="text-red-500">*</span></label>
+                            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" required class="input-health" />
+                            <div class="error-message text-red-500 text-sm hidden mt-1" id="confirmPasswordError"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full justify-center py-4 text-lg">✨ Create Account</button>
+                </form>
+
+                <div class="mt-6 pt-6 border-t border-health-100 text-center">
+                    <p class="text-slate-600 mb-2">Already have an account?</p>
+                    <a href="/login.html" class="text-health-600 font-semibold hover:text-health-800">🔐 Sign in →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('signupForm');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const passwordStrength = document.getElementById('passwordStrength');
+
+        password.addEventListener('input', function() {
+            const strength = getPasswordStrength(password.value);
+            passwordStrength.textContent = strength.text;
+            passwordStrength.className = 'password-strength text-sm mt-1 ' + strength.class;
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm()) form.submit();
+        });
+
+        form.querySelectorAll('input[required]').forEach(input => {
+            input.addEventListener('blur', () => validateField(input));
+        });
+        confirmPassword.addEventListener('input', validatePasswordMatch);
+    });
+
+    function getPasswordStrength(password) {
+        let score = 0;
+        if (password.length >= 8) score++;
+        if (/[a-z]/.test(password)) score++;
+        if (/[A-Z]/.test(password)) score++;
+        if (/[0-9]/.test(password)) score++;
+        if (/[^A-Za-z0-9]/.test(password)) score++;
+        if (score < 3) return { text: '🔴 Weak password', class: 'text-red-500' };
+        if (score < 5) return { text: '🟡 Medium strength', class: 'text-amber-500' };
+        return { text: '🟢 Strong password', class: 'text-emerald-500' };
+    }
+
+    function validateForm() {
+        let isValid = true;
+        document.querySelectorAll('#signupForm input[required]').forEach(input => {
+            if (!validateField(input)) isValid = false;
+        });
+        if (!validatePasswordMatch()) isValid = false;
+        return isValid;
+    }
+
+    function validateField(input) {
+        const value = input.value.trim();
+        const errorElement = document.getElementById(input.name + 'Error');
+        input.classList.remove('border-red-500');
+        errorElement.classList.add('hidden');
+
+        if (!value) { showError(input, errorElement, input.name + ' is required'); return false; }
+
+        switch (input.name) {
+            case 'firstName': case 'lastName':
+                if (value.length < 2) { showError(input, errorElement, 'Name must be at least 2 characters'); return false; }
+                if (!/^[a-zA-Z\s]+$/.test(value)) { showError(input, errorElement, 'Letters and spaces only'); return false; }
+                break;
+            case 'email':
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) { showError(input, errorElement, 'Invalid email'); return false; }
+                break;
+            case 'phoneNumber':
+                if (!/^[\+]?[0-9\s\-\(\)]{10,}$/.test(value)) { showError(input, errorElement, 'Invalid phone number'); return false; }
+                break;
+            case 'password':
+                if (value.length < 8) { showError(input, errorElement, 'Min. 8 characters'); return false; }
+                break;
+        }
+        return true;
+    }
+
+    function validatePasswordMatch() {
+        const pw = document.getElementById('password').value;
+        const cpw = document.getElementById('confirmPassword').value;
+        const errorElement = document.getElementById('confirmPasswordError');
+        const confirmInput = document.getElementById('confirmPassword');
+        if (cpw && pw !== cpw) { showError(confirmInput, errorElement, 'Passwords do not match'); return false; }
+        confirmInput.classList.remove('border-red-500');
+        errorElement.classList.add('hidden');
+        return true;
+    }
+
+    function showError(input, errorElement, message) {
+        input.classList.add('border-red-500');
+        errorElement.textContent = message;
+        errorElement.classList.remove('hidden');
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="public-header" class="header-health sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+            <a href="/" class="flex items-center space-x-4 group">
+                <div class="logo-badge">🏥</div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-slate-800 group-hover:text-health-600 transition-colors">AROGYA MEDICAL CENTER</h1>
+                    <p class="text-sm text-health-600 font-medium">💙 MediFlow Connect Portal</p>
+                </div>
+            </a>
+
+            <nav class="hidden lg:flex items-center space-x-2">
+                <a href="/" class="nav-emoji-link"><span>🏠</span> Home</a>
+                <a href="#services" class="nav-emoji-link"><span>⚕️</span> Services</a>
+                <a href="#about" class="nav-emoji-link"><span>ℹ️</span> About</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <div class="flex items-center space-x-3 bg-health-50 px-4 py-2 rounded-xl border border-health-100">
+                    <span class="text-2xl">🚑</span>
+                    <div>
+                        <div class="text-xs text-health-600 font-semibold">24/7 Emergency</div>
+                        <div class="text-health-800 font-bold text-lg">1313</div>
+                    </div>
+                </div>
+                <a href="/login.html" class="btn-primary text-sm">🔐 Login</a>
+            </div>
+
+            <button id="mobileMenuToggle" class="lg:hidden p-2 rounded-lg bg-health-50 text-health-700">
+                <span class="text-2xl">☰</span>
+            </button>
+        </div>
+
+        <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-2 space-y-2 border-t border-health-100 pt-4">
+            <a href="/" class="block nav-emoji-link"><span>🏠</span> Home</a>
+            <a href="#services" class="block nav-emoji-link"><span>⚕️</span> Services</a>
+            <a href="#about" class="block nav-emoji-link"><span>ℹ️</span> About</a>
+            <a href="/login.html" class="block btn-primary text-center justify-center mt-2">🔐 Login to Portal</a>
+        </div>
+    </div>
+</header>
+</body>
+</html>
